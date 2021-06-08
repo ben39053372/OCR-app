@@ -6,9 +6,7 @@ import { Home } from "./screen/Home";
 import { AllResult } from "./screen/AllResult";
 import { Result } from "./screen/Result";
 import { Upload } from "./screen/Upload";
-import { CLOUDINARY_NAME } from "./api/uploadImage2Cloudinary";
 
-console.log(CLOUDINARY_NAME)
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +18,11 @@ export enum Route {
   Upload = "Upload",
 }
 
-const TabBarIcon = ({ color, size, route }: {
+const TabBarIcon = ({
+  color,
+  size,
+  route,
+}: {
   route: RouteProp<Record<string, object | undefined>, string>;
   navigation: any;
 } & {
@@ -35,18 +37,12 @@ const TabBarIcon = ({ color, size, route }: {
       return <MaterialIcons name="list" size={size} color={color} />;
     case Route.Result:
       return (
-        <MaterialIcons
-          name="photo-camera-back"
-          size={size}
-          color={color}
-        />
+        <MaterialIcons name="photo-camera-back" size={size} color={color} />
       );
     case Route.Upload:
-      return (
-        <MaterialIcons name="file-upload" size={size} color={color} />
-      );
+      return <MaterialIcons name="file-upload" size={size} color={color} />;
   }
-}
+};
 
 export default function App() {
   return (
@@ -54,7 +50,8 @@ export default function App() {
       <Tab.Navigator
         initialRouteName={Route.Home}
         screenOptions={(screenProps) => ({
-          tabBarIcon: (tabBarprops) => TabBarIcon({ ...tabBarprops, ...screenProps })
+          tabBarIcon: (tabBarprops) =>
+            TabBarIcon({ ...tabBarprops, ...screenProps }),
         })}
       >
         <Tab.Screen name={Route.Home} component={Home} />
@@ -62,6 +59,6 @@ export default function App() {
         <Tab.Screen name={Route.Result} component={Result} />
         <Tab.Screen name={Route.Upload} component={Upload} />
       </Tab.Navigator>
-    </NavigationContainer >
+    </NavigationContainer>
   );
 }
