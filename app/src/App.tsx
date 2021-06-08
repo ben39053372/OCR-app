@@ -8,6 +8,8 @@ import { Result } from "./screen/Result";
 import { Upload } from "./screen/Upload";
 
 import { MaterialIcons } from "@expo/vector-icons";
+import { ThemeProvider } from '@ben39053372/expo-theme'
+
 
 const Tab = createBottomTabNavigator();
 
@@ -46,19 +48,21 @@ const TabBarIcon = ({
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={Route.Home}
-        screenOptions={(screenProps) => ({
-          tabBarIcon: (tabBarprops) =>
-            TabBarIcon({ ...tabBarprops, ...screenProps }),
-        })}
-      >
-        <Tab.Screen name={Route.Home} component={Home} />
-        <Tab.Screen name={Route.AllResult} component={AllResult} />
-        <Tab.Screen name={Route.Result} component={Result} />
-        <Tab.Screen name={Route.Upload} component={Upload} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName={Route.Home}
+          screenOptions={(screenProps) => ({
+            tabBarIcon: (tabBarprops) =>
+              TabBarIcon({ ...tabBarprops, ...screenProps }),
+          })}
+        >
+          <Tab.Screen name={Route.Home} component={Home} />
+          <Tab.Screen name={Route.Upload} component={Upload} />
+          <Tab.Screen name={Route.AllResult} component={AllResult} />
+          <Tab.Screen name={Route.Result} component={Result} options={{ tabBarButton: () => null }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

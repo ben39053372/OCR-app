@@ -10,3 +10,8 @@ export const sendOCR = async (imageUrl: string) => {
   );
   return await res.json();
 };
+
+export const healthCheck = async () => {
+  const res = await fetch(`${process.env.SERVER_HOST}`);
+  return await res.json();
+};

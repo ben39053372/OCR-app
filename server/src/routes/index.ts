@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
   res.json({
     msg: "OCR backend",
     db_status: data,
+    date: new Date(),
   });
 });
 
