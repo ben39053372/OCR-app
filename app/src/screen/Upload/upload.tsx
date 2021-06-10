@@ -14,6 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import { uploadImage } from "../../api/cloudinary";
 import { sendOCR } from "../../api/server";
 import { Button } from '@ben39053372/expo-theme'
+import { UIImagePickerControllerQualityType } from "expo-image-picker/build/ImagePicker.types";
 
 
 export function Upload() {
@@ -48,6 +49,7 @@ export function Upload() {
     aspect: [4, 3],
     exif: true,
     quality: 0.6,
+
   };
 
   const pickImage = async () => {
@@ -58,7 +60,8 @@ export function Upload() {
   };
 
   const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync(uploadConfig);
+    let result = await ImagePicker.launchCameraAsync({ ...uploadConfig, quality: 0.08, videoQuality: UIImagePickerControllerQualityType.Low });
+    console.log(result)
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -90,7 +93,7 @@ export function Upload() {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
 
-        {image && <Image source={{ uri: image }} style={styles.image} />}
+        {image && <Image source={{ uri: image }} resizeMode="contain" style={styles.image} />}
         {image &&
           (loading ? (
             <><ActivityIndicator /><Text>{message}</Text></>

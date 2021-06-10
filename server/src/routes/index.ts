@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
 router.get("/ocrResults", async (req, res) => {
   const ocrs = db.collection("ocrs");
   const data = await ocrs.find({}).toArray();
+  console.log(data);
   res.json({
     msg: "Retrieve all stored records in DB",
     data,
@@ -48,17 +49,18 @@ router.post("/ocr", async (req, res) => {
   });
 
   let tesseractResult, insertResult;
+  const ocrs = db.collection("ocrs");
 
   if (visionResult) {
     try {
       tesseractResult = await Tesseract.recognize(url, "eng+chi_tra", {
         logger: (m) => console.log(m),
       });
-      const ocrs = db.collection("ocrs");
       insertResult = await ocrs.insertOne({
         imageUrl,
         visionResult,
         tesseractResult: tesseractResult?.data.text,
+        date: new Date(),
       });
     } catch (error) {
       console.log(error);
@@ -69,9 +71,15 @@ router.post("/ocr", async (req, res) => {
       return;
     }
   } else {
+    insertResult = await ocrs.insertOne({
+      imageUrl,
+      visionResult,
+      date: new Date(),
+    });
     res.status(200).json({
       msg: "nothing text",
     });
+    return;
   }
   try {
     res.json({
