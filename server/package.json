@@ -13,8 +13,10 @@
     "tesseract.js": "^2.1.4"
   },
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "build": "tsc"
+    "dev": "nodemon src/index.ts",
+    "start": "node build",
+    "build": "tsc",
+    "gcp-build": "tsc "
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

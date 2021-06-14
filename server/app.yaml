@@ -1,0 +1,10 @@
+runtime: nodejs14
+
+env_variables:
+  MONGODB_USERNAME: "username"
+  MONGODB_PASSWORD: "username"
+  MONGODB_NAME: "prudential"
+  MONGODB_HOST: "cluster0.x9c5g.mongodb.net"
+  GOOGLE_API_KEY: AIzaSyDnX6Pe373ZO977LEI0CeYzGe1wdFpQEKM
+
+instance_class: F4

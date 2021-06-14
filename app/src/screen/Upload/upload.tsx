@@ -13,16 +13,14 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { uploadImage } from "../../api/cloudinary";
 import { sendOCR } from "../../api/server";
-import { Button } from '@ben39053372/expo-theme'
-import { UIImagePickerControllerQualityType } from "expo-image-picker/build/ImagePicker.types";
-
+import { Button } from "@ben39053372/expo-theme";
+import * as ImageManipulator from 'expo-image-manipulator';
 
 export function Upload() {
   const [image, setImage] = useState<string | undefined>();
-  const [url, setUrl] = useState<any>();
   const [result, setResult] = useState();
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -47,23 +45,30 @@ export function Upload() {
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     allowsEditing: true,
     aspect: [4, 3],
-    exif: true,
     quality: 0.6,
-
   };
+
+  const resizeImage = async (uri: string) => {
+    return await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 700 } }],
+      { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+    )
+  }
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync(uploadConfig);
     if (!result.cancelled) {
-      setImage(result.uri);
+      const photo = await resizeImage(result.uri)
+      setImage(photo.uri);
     }
   };
 
   const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({ ...uploadConfig, quality: 0.08, videoQuality: UIImagePickerControllerQualityType.Low });
-    console.log(result)
+    let result = await ImagePicker.launchCameraAsync(uploadConfig);
     if (!result.cancelled) {
-      setImage(result.uri);
+      const photo = await resizeImage(result.uri)
+      setImage(photo.uri);
     }
   };
 
@@ -71,18 +76,16 @@ export function Upload() {
     if (!image) return;
     setLoading(true);
     try {
-      setMessage("Uploading Image")
+      setMessage("Uploading Image");
       const res = await uploadImage(image);
-      setUrl(res.secure_url);
-      setMessage("OCR ing...")
+      setMessage("OCR ing...");
       const ocrResult = await sendOCR(res.secure_url);
-      console.log(ocrResult);
       setResult(ocrResult.visionResult);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
-      setMessage("")
+      setMessage("");
     }
   };
 
@@ -92,11 +95,19 @@ export function Upload() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-
-        {image && <Image source={{ uri: image }} resizeMode="contain" style={styles.image} />}
+        {image && (
+          <Image
+            source={{ uri: image }}
+            resizeMode="contain"
+            style={styles.image}
+          />
+        )}
         {image &&
           (loading ? (
-            <><ActivityIndicator /><Text>{message}</Text></>
+            <>
+              <ActivityIndicator />
+              <Text>{message}</Text>
+            </>
           ) : (
             <Button
               primary
@@ -104,15 +115,21 @@ export function Upload() {
               style={{ margin: 5 }}
               disabled={!image}
               onPress={submit}
-            >Upload photo</Button>
+            >
+              Upload photo
+            </Button>
           ))}
         <ScrollView style={{ width: "100%" }}>
           <Text>{JSON.stringify(result)?.replace(/\\n/g, nextLine)}</Text>
         </ScrollView>
       </View>
       <View style={styles.buttonView}>
-        <Button primary rounded onPress={pickImage}>Pick Image</Button>
-        <Button secondary rounded onPress={takePhoto}>Take Photo</Button>
+        <Button primary rounded onPress={pickImage}>
+          Pick Image
+        </Button>
+        <Button secondary rounded onPress={takePhoto}>
+          Take Photo
+        </Button>
       </View>
     </SafeAreaView>
   );

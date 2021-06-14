@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { healthCheck } from '../../api/server'
+import { View, Text, StyleSheet, Alert } from 'react-native'
+import { clearAllData, healthCheck } from '../../api/server'
 import { Button } from '@ben39053372/expo-theme'
 
 export const Home = () => {
@@ -14,6 +14,7 @@ export const Home = () => {
     } catch (err) {
       setStatus(undefined)
     }
+    if (isDbOk()) Alert.alert("Server Health Ok!")
   }
 
   useEffect(() => {
@@ -21,6 +22,16 @@ export const Home = () => {
   }, [])
 
   const isDbOk = () => status?.db_status?.ok
+
+  const onClearPress = async () => {
+    try {
+
+      const res = await clearAllData()
+      Alert.alert("Cleared!")
+    } catch (err) {
+      Alert.alert("error", JSON.stringify(err))
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -30,6 +41,7 @@ export const Home = () => {
       <Text style={[styles.text, styles.title]}>DB Status</Text>
       <Text style={[styles.text, isDbOk() ? styles.success : styles.fail]}>{isDbOk() ? "ok" : "fail"}</Text>
       <Text>{JSON.stringify(status, null, 2)}</Text>
+      <Button error onPress={onClearPress} >Clear All Data</Button>
     </View>
   )
 }

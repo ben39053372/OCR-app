@@ -1,24 +1,15 @@
 import React from "react";
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import { Home } from "./screen/Home";
 import { AllResult } from "./screen/AllResult";
 import { Result } from "./screen/Result";
 import { Upload } from "./screen/Upload";
-
 import { MaterialIcons } from "@expo/vector-icons";
 import { ThemeProvider } from '@ben39053372/expo-theme'
-
+import { Route } from "./route";
 
 const Tab = createBottomTabNavigator();
-
-export enum Route {
-  Home = "Home",
-  AllResult = "AllResult",
-  Result = "Result",
-  Upload = "Upload",
-}
 
 const TabBarIcon = ({
   color,
@@ -51,7 +42,7 @@ export default function App() {
     <ThemeProvider>
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName={Route.Home}
+          // initialRouteName={Route.Home}
           screenOptions={(screenProps) => ({
             tabBarIcon: (tabBarprops) =>
               TabBarIcon({ ...tabBarprops, ...screenProps }),

@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ben39053372/expo-theme": "^0.0.71",
+    "@ben39053372/expo-theme": "^0.0.717",
     "@cloudinary/base": "^1.0.0-beta.3",
     "@cloudinary/react": "^1.0.0-beta.8",
     "@react-native-community/masked-view": "0.1.10",
@@ -17,7 +17,9 @@
     "babel-plugin-inline-dotenv": "^1.6.0",
     "dotenv": "^10.0.0",
     "expo": "~41.0.1",
+    "expo-image-manipulator": "~9.1.0",
     "expo-image-picker": "~10.1.4",
+    "expo-network": "~3.1.1",
     "expo-splash-screen": "~0.10.2",
     "expo-updates": "~0.5.4",
     "react": "16.13.1",

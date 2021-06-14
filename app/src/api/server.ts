@@ -20,3 +20,10 @@ export const getAllOCR = async () => {
   const res = await fetch(`${process.env.SERVER_HOST}/ocrResults`);
   return await res.json();
 };
+
+export const clearAllData = async () => {
+  const res = await fetch(`${process.env.SERVER_HOST}/clearOcrResult`, {
+    method: "post",
+  });
+  return await res.json();
+};

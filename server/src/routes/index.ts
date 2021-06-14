@@ -1,7 +1,7 @@
 import express from "express";
-import { imagesAnnotate } from "../apis/visionApi";
 import { db } from "../utils/mongoDB";
-import Tesseract from "tesseract.js";
+import { errorHandler } from "../utils/errorHandler";
+import { insertData, tesseractOcr, visionOcr } from "../services/ocr";
 
 const router = express.Router();
 
@@ -20,80 +20,53 @@ router.get("/", async (req, res) => {
 /**
  * get('/ocrResults') - Retrieve all stored records in DB
  */
-router.get("/ocrResults", async (req, res) => {
+router.get("/ocrResults", async (req, res, next) => {
   const ocrs = db.collection("ocrs");
-  const data = await ocrs.find({}).toArray();
-  console.log(data);
-  res.json({
-    msg: "Retrieve all stored records in DB",
-    data,
-  });
+  try {
+    const data = await ocrs.find({ ip: req.ip }).sort({ date: -1 }).toArray();
+    res.json({
+      msg: "Retrieve all stored records in DB",
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**
  * post('/ocr) [params: imageUrl] - Perform OCR and store result to DB
  */
-router.post("/ocr", async (req, res) => {
-  const query = req.query;
-  const imageUrl = query.imageUrl;
+router.post("/ocr", async (req, res, next) => {
+  try {
+    let tesseractResult;
+    const query = req.query;
+    const imageUrl = query.imageUrl;
 
-  if (!imageUrl) {
-    res.status(400).send("imageUrl is missing");
-    return;
-  }
-
-  const url = imageUrl.toString();
-  const visionResult = await imagesAnnotate(url).then((result) => {
-    console.log(result.responses);
-    return result.responses[0]?.fullTextAnnotation?.text;
-  });
-
-  let tesseractResult, insertResult;
-  const ocrs = db.collection("ocrs");
-
-  if (visionResult) {
-    try {
-      tesseractResult = await Tesseract.recognize(url, "eng+chi_tra", {
-        logger: (m) => console.log(m),
-      });
-      insertResult = await ocrs.insertOne({
-        imageUrl,
-        visionResult,
-        tesseractResult: tesseractResult?.data.text,
-        date: new Date(),
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        status: "Error",
-        error,
-      });
+    if (!imageUrl) {
+      res.status(400).send("imageUrl is missing");
       return;
     }
-  } else {
-    insertResult = await ocrs.insertOne({
-      imageUrl,
+
+    const url = imageUrl.toString();
+    const visionResult = await visionOcr(url);
+
+    if (visionResult) tesseractResult = await tesseractOcr(url);
+
+    const insertResult = await insertData({
+      imageUrl: url,
       visionResult,
-      date: new Date(),
+      tesseractResult,
+      ip: req.ip,
     });
-    res.status(200).json({
-      msg: "nothing text",
-    });
-    return;
-  }
-  try {
-    res.json({
-      data: imageUrl,
-      visionResult,
-      tesseractResult: tesseractResult?.data.text,
+
+    res.status(201).json({
       insertResult,
+      visionResult,
+      tesseractResult,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      status: "error",
-      error,
-    });
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 });
 
@@ -102,8 +75,10 @@ router.post("/ocr", async (req, res) => {
  */
 router.post("/clearOcrResult", async (req, res) => {
   const ocrs = db.collection("ocrs");
-  const data = ocrs.remove({});
+  const data = ocrs.remove({ ip: req.ip });
   res.json({ msg: "Clear all records in DB", data });
 });
+
+router.use(errorHandler);
 
 export { router };

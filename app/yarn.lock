@@ -1143,10 +1143,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@ben39053372/expo-theme@^0.0.71":
-  version "0.0.71"
-  resolved "https://registry.yarnpkg.com/@ben39053372/expo-theme/-/expo-theme-0.0.71.tgz#8d107edb5d74043a8096580ac995b46be3a73190"
-  integrity sha512-xnA851MZgoQ5eujL5X1gCK+rf20XpVxV8jFNkFDuWBSGYpCEYMQNWr0YPVQCf6NKOKG5VgEynP2LrYks0KUkPg==
+"@ben39053372/expo-theme@^0.0.717":
+  version "0.0.717"
+  resolved "https://registry.yarnpkg.com/@ben39053372/expo-theme/-/expo-theme-0.0.717.tgz#f90aa35b555ed7ab25a7ae08c22d00a1823579dd"
+  integrity sha512-KE0Cezg94cwg32TtO3q34TW/QtdkIOjadFuHFal6jLVWfNdWOHpVrOOyTQ9DLJGTak4RT5/sRWRdwXwg4OD7oA==
   dependencies:
     "@expo/vector-icons" "^12.0.5"
     "@types/jest" "^26.0.23"
@@ -4213,6 +4213,11 @@ expo-image-loader@~2.1.1:
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-2.1.1.tgz#028ae58f7c7a33ca9a406716c2b31969216d016f"
   integrity sha512-EeItNIsmw4g+FIb9S9AHE7FAWQkuiIguFMua/RQ2mFHKFZYa/BU32MGagY+e4LzasBVbDKWgd3NHO+EYC6XeEA==
 
+expo-image-manipulator@~9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-9.1.0.tgz#c1bac33c071e116a97a654f9f11bf50f7ff8932c"
+  integrity sha512-jguMQ3k63JJwxo1mAsLRa+lXbH9fVsQXKbOfwY5KKXvNld7aaRgCO6pWnrBfCxvKkU4KhVp9JWOrsz4qcnYQ2w==
+
 expo-image-picker@~10.1.4:
   version "10.1.4"
   resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-10.1.4.tgz#5805ea365385298cd59315790481a0a8d6c6a9ef"
@@ -4227,6 +4232,11 @@ expo-keep-awake@~9.1.2:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-9.1.2.tgz#b3e52c7bef0ade975ae88637a2bf980f6b573368"
   integrity sha512-CCuEOQUNLYtMA0rt0sQ9u5LlIMH7lDJG7dImoorfKMsP95yHXy8dl3oCdtaz2zbsPgggVYeom9gE+gQu+Ki4rQ==
+
+expo-network@~3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/expo-network/-/expo-network-3.1.1.tgz#05a3c0e6cd598b7650e2fd02a8e201866e788be5"
+  integrity sha512-ryhq8PQIY8GbvmLXHPEXJ8WUGKdnwr4CfT8Y/BsGLZzyjoied+9tgaWmdV4pOCWd/hcBoTqr9q3hlUbZDCDLJw==
 
 expo-permissions@~12.0.1:
   version "12.0.1"
