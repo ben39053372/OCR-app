@@ -1,0 +1,23 @@
+.navBar {
+  @apply flex flex-row font-bold justify-between items-center flex-wrap space-x-4 px-2;
+
+  .brand {
+    @apply flex flex-row flex-shrink-0 items-center;
+
+    .logo {
+      @apply h-14 rounded-full;
+    }
+
+    .title {
+      @apply text-2xl;
+    }
+  }
+
+  .routeList {
+    @apply flex block flex-grow space-x-5 invisible lg:w-auto sm:visible;
+  }
+
+  .rightAction {
+    @apply space-x-5 px-2;
+  }
+}

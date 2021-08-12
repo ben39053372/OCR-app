@@ -1,0 +1,15 @@
+.actions {
+  @apply flex my-3 items-center justify-between;
+}
+
+.textButton {
+  @apply font-bold text-blue-500;
+}
+
+.otherActions {
+  @apply flex pt-4 flex-col space-y-2;
+
+  button {
+    @apply w-full;
+  }
+}

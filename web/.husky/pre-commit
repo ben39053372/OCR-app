@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# npm test
+# npx stylelint --fix **/*.{css,scss,sass}
+# npx eslint "src/**/*.{tsx,ts,jsx,js}" --fix
+npx lint-staged

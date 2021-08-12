@@ -1,0 +1,10 @@
+{
+  "email": "Email",
+  "Invalid email address": "Invalid email address",
+  "password": "Password",
+  "Must be characters or more": "Must be {{length}} characters or more",
+  "place input": "Place Input {{somethings}}",
+  "Login with": "Login with {{service}}",
+  "Facebook": "Facebook",
+  "Google": "Google"
+}

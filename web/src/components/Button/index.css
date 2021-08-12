@@ -1,0 +1,9 @@
+.btnBase {
+  text-shadow: 2px 2px 5px #0005;
+
+  @apply flex flex-row justify-center items-center shadow-md align-middle py-2 px-4 rounded disabled:opacity-40;
+}
+
+.primary {
+  @apply bg-blue-500 text-white font-bold hover:brightness-90;
+}

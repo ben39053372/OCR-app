@@ -1,0 +1,4 @@
+{
+  "*.{js,ts,jsx,tsx,vue}": "npx eslint 'src/**/*.{js,tsx,tsx,ts,vue}' --fix",
+  "*.{css,scss,sass}": "npx stylelint 'src/**/*.{css,scss,sass}'"
+}
