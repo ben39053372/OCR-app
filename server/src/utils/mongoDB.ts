@@ -7,7 +7,9 @@ const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB
 export let db: MongoDB.Db;
 
 export function connectDB() {
-  return MongoClient.connect(uri, { useUnifiedTopology: true }).then((c) => {
+  return MongoClient.connect(process.env.MONGODB_URL as string, {
+    useUnifiedTopology: true,
+  }).then((c) => {
     db = c.db();
     console.log("DB connected");
   });

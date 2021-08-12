@@ -1,29 +1,26 @@
+import axios from "axios";
+
 export const sendOCR = async (imageUrl: string) => {
-  const res = await fetch(
-    `${process.env.SERVER_HOST}/ocr?${new URLSearchParams({
+  const res = await axios({
+    method: "post",
+    url: `${process.env.SERVER_HOST}/ocr?${new URLSearchParams({
       imageUrl,
     })}`,
-    {
-      method: "post",
-      keepalive: true,
-    }
-  );
-  return await res.json();
+  });
+  return res.data;
 };
 
 export const healthCheck = async () => {
-  const res = await fetch(`${process.env.SERVER_HOST}`);
-  return await res.json();
+  const res = await axios({ method: "get", url: `${process.env.SERVER_HOST}` });
+  return res.data;
 };
 
 export const getAllOCR = async () => {
-  const res = await fetch(`${process.env.SERVER_HOST}/ocrResults`);
-  return await res.json();
+  const res = await axios(`${process.env.SERVER_HOST}/ocrResults`);
+  return res.data;
 };
 
 export const clearAllData = async () => {
-  const res = await fetch(`${process.env.SERVER_HOST}/clearOcrResult`, {
-    method: "post",
-  });
-  return await res.json();
+  const res = await axios.post(`${process.env.SERVER_HOST}/clearOcrResult`);
+  return res.data;
 };
