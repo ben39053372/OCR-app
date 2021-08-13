@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const imagesAnnotate = async (imageUri: string) => {
+  console.log({ imageUri });
   const { data } = await axios.post(
     `https://vision.googleapis.com/v1/images:annotate?${new URLSearchParams({
       key: process.env.GOOGLE_API_KEY || "",

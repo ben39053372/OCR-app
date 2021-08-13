@@ -11,6 +11,7 @@ export const sendOCR = async (imageUrl: string) => {
 };
 
 export const healthCheck = async () => {
+  console.log(process.env.SERVER_HOST);
   const res = await axios({ method: "get", url: `${process.env.SERVER_HOST}` });
   return res.data;
 };

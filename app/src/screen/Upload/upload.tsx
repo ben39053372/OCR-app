@@ -51,8 +51,8 @@ export function Upload() {
   const resizeImage = async (uri: string) => {
     return await ImageManipulator.manipulateAsync(
       uri,
-      [{ resize: { width: 800 } }],
-      { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+      [{ resize: { width: 1500 } }],
+      {  format: ImageManipulator.SaveFormat.JPEG }
     )
   }
 

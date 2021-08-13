@@ -37,10 +37,13 @@ router.get("/ocrResults", async (req, res, next) => {
  * post('/ocr) [params: imageUrl] - Perform OCR and store result to DB
  */
 router.post("/ocr", async (req, res, next) => {
+  console.log("hi");
+
   try {
     let tesseractResult;
     const query = req.query;
     const imageUrl = query.imageUrl;
+    console.log(imageUrl);
 
     if (!imageUrl) {
       res.status(400).send("imageUrl is missing");
@@ -50,7 +53,7 @@ router.post("/ocr", async (req, res, next) => {
     const url = imageUrl.toString();
     const visionResult = await visionOcr(url);
 
-    if (visionResult) tesseractResult = await tesseractOcr(url);
+    // if (visionResult) tesseractResult = await tesseractOcr(url);
 
     const insertResult = await insertData({
       imageUrl: url,
